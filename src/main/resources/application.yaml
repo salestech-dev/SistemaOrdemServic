@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: SistemaOS
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sistema_os
+    username: postgres
+    password: Filhos02
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update   # update = atualiza schema sem apagar nada
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true       # mostra as queries do JPA
+
+  server:
+    port: 8080
+
