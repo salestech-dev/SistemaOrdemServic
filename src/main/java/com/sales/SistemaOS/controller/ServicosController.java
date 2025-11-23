@@ -35,9 +35,9 @@ public class ServicosController {
         return servicoService.listarServicos();
     }
 
-    @DeleteMapping
-    public void deletarSevico(UUID uuid){
-        servicoService.deletarServico(uuid);
+    @DeleteMapping("/{id}")
+    public void deletarSevico(@PathVariable UUID id){
+        servicoService.deletarServico(id);
     }
 
 }
