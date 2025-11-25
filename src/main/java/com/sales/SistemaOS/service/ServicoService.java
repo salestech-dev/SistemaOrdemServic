@@ -41,6 +41,11 @@ public class ServicoService {
         Servicos servicos = servicosRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("Servicos não econtrado"));
 
+        if(servicosRepository.existsByNome(servicos.getNome())){
+            throw new RuntimeException("Um servico com esse nome ja existe");
+        }
+
+
         if(editarDTO.nome() != null){
             servicos.setNome(editarDTO.nome());
         }

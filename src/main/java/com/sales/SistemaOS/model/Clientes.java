@@ -1,9 +1,7 @@
 package com.sales.SistemaOS.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.UUID;
 
@@ -11,6 +9,7 @@ import java.util.UUID;
 public class Clientes {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false)
@@ -21,6 +20,17 @@ public class Clientes {
 
     @Column(nullable = false)
     private String telefone;
+
+    @Column(nullable = false, length = 11)
+    private int cpf;
+
+    public int getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(int cpf) {
+        this.cpf = cpf;
+    }
 
     public UUID getId() {
         return id;
@@ -61,6 +71,7 @@ public class Clientes {
                 ", nome='" + nome + '\'' +
                 ", email='" + email + '\'' +
                 ", telefone='" + telefone + '\'' +
+                ", cpf='" + cpf + '\''+
                 '}';
     }
 }

@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/api/os")
 public class OrdermDeServicoController {
 
     @Autowired
