@@ -72,4 +72,8 @@ public class ClienteService {
         return clientesRepository.save(clienteExistente);
 
     }
+
+    public long contarClientes(){
+        return clientesRepository.count();
+    }
 }

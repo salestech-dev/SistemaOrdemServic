@@ -30,6 +30,23 @@ public class OrdemDeServico {
     @JoinColumn(name = "servico_id", nullable = false)
     private Servicos servicos;
 
+
+
+
+
+
+    @Override
+    public String toString() {
+        return "OrdemDeServico{" +
+                "id=" + id +
+                ", dataAbertura=" + dataAbertura +
+                ", observacoes='" + observacoes + '\'' +
+                ", status=" + status +
+                ", clientes=" + clientes +
+                ", servicos=" + servicos +
+                '}';
+    }
+
     public UUID getId() {
         return id;
     }
@@ -76,17 +93,5 @@ public class OrdemDeServico {
 
     public void setServicos(Servicos servicos) {
         this.servicos = servicos;
-    }
-
-    @Override
-    public String toString() {
-        return "OrdemDeServico{" +
-                "id=" + id +
-                ", dataAbertura=" + dataAbertura +
-                ", observacoes='" + observacoes + '\'' +
-                ", status=" + status +
-                ", clientes=" + clientes +
-                ", servicos=" + servicos +
-                '}';
     }
 }

@@ -32,38 +32,22 @@ public class OrdemDeServicosService {
 
     public Servicos buscarServicosPorId(UUID id){
         return servicosRepository.findById(id).orElseThrow(() -> new RuntimeException("Servico não econtrado"));
-    }
-
-    public OrdemDeServico salvarNovaOrdem(UUID idCliente, UUID idServico, String observacoes){
-
-        Clientes cliente = buscarClientesPorId(idCliente);
-        Servicos servico = buscarServicosPorId(idServico);
-
-        OrdemDeServico ordem = new OrdemDeServico();
-        ordem.setDataAbertura(LocalDate.now());
-        ordem.setObservacoes(observacoes);
-        ordem.setStatus(EnumStatus.ABERTA);
-        ordem.setClientes(cliente);
-        ordem.setServicos(servico);
-
-        return ordemRepository.save(ordem);
-    }
-
-    public List<OrdemDeServico> listar(){
-       return ordemRepository.findAll();
-    }
-
-    public void deletarOrdem(UUID id){
-        if(!ordemRepository.existsById(id)){
-            throw new RuntimeException("Ordem não encontrada");
-        }
-        ordemRepository.deleteById(id);
-    }
-
-    public OrdemDeServico buscarPorId(UUID uuid){
-        var ordemEcontrada = ordemRepository.findById(uuid).orElseThrow(()-> new RuntimeException("Não econtrado"));
-        OrdemDeServico ordemDeServico = ordemEcontrada;
-        return ordemDeServico;
 
     }
+
+    public OrdemDeServico criarNovaOrdem(String observacoes, UUID idClientes, UUID idServicos){
+        Clientes cliente = buscarClientesPorId(idClientes);
+        Servicos servico = buscarServicosPorId(idServicos);
+
+        OrdemDeServico novaOrdem = new OrdemDeServico();
+        novaOrdem.setClientes(cliente);
+        novaOrdem.setServicos(servico);
+        novaOrdem.setStatus(EnumStatus.ABERTA);
+        novaOrdem.setObservacoes(observacoes);
+        novaOrdem.setDataAbertura(LocalDate.now());
+
+        ordemRepository.save(novaOrdem);
+        return novaOrdem;
+    }
+
 }

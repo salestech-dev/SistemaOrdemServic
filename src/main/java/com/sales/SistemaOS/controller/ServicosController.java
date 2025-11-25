@@ -40,4 +40,14 @@ public class ServicosController {
         servicoService.deletarServico(id);
     }
 
+    @GetMapping("/servicos/buscar")
+    public List<Servicos> buscarPorNome(@RequestParam String nome){
+        return servicoService.buscarPorNome(nome);
+    }
+
+    @GetMapping("/servicos/ativos")
+    public List<Servicos> buscarPorAtivo(){
+        return servicoService.buscarPorAtivoTrue();
+    }
+
 }

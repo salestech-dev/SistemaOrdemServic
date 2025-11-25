@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,6 +22,11 @@ public class ServicoService {
         if(servicosRepository.existsByNome(servicos.getNome())){
             throw new RuntimeException("Esse serviço ja existe");
         }
+
+        if(servicosRepository.existsByCodigo(servicos.getCodigo())){
+            throw new RuntimeException("Um serviço com esse codigo ja existe");
+        }
+
         return servicosRepository.save(servicos);
     }
 
@@ -57,8 +63,30 @@ public class ServicoService {
         if(editarDTO.valor() != null){
             servicos.setValor(editarDTO.valor());
         }
+        if(editarDTO.tempoMedioMinutos() != null){
+            servicos.setTempoMedioMinutos(editarDTO.tempoMedioMinutos());
+        }
+        servicos.setAtivo(editarDTO.ativo());
+
+
 
         return servicosRepository.save(servicos);
 
     }
+
+    public List<Servicos> buscarPorNome(String nome){
+       if(!servicosRepository.existsByNome(nome)){
+          throw new RuntimeException("Não existe nenhuma ordem com esse nome");
+       }
+
+        List<Servicos> lista = servicosRepository.findByNomeContainingIgnoreCase(nome);
+        return lista;
+    }
+
+    public List<Servicos> buscarPorAtivoTrue(){
+        List<Servicos> lista = servicosRepository.findByAtivoTrue();
+        return lista;
+    }
+
+
 }
