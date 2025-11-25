@@ -22,13 +22,13 @@ public class Clientes {
     private String telefone;
 
     @Column(nullable = false, length = 11)
-    private int cpf;
+    private String cpf;
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 

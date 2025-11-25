@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -22,11 +21,14 @@ public class ClienteService {
             throw new IllegalArgumentException("Nome do cliente não pode ser vazio");
         }
 
+        if(clientesRepository.existsByTelefone(clientes.getTelefone())){
+            throw new RuntimeException("Esse Telefone ja esta cadastrado");
+        }
         if(clientesRepository.existsByCpf(clientes.getCpf())){
             throw new RuntimeException("Esse CPF ja esta cadastrado");
         }
 
-        if(!clientes.getNome().contains("@")){
+        if(!clientes.getEmail().contains("@")){
             throw new IllegalArgumentException("Email invalido");
         }
         if (clientesRepository.existsByEmail(clientes.getEmail())){
@@ -42,35 +44,32 @@ public class ClienteService {
       return clientesRepository.findAll();
     }
 
-    public void deletarCliente(Clientes clientes){
-        clientesRepository.delete(clientes);
+    public void deletarCliente(UUID id) {
+        Clientes cliente = clientesRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        clientesRepository.delete(cliente);
     }
 
-    public Clientes editarCliente(UUID id, EditarClienteDTO editarClienteDTO) {
+    public Clientes editarCliente(UUID id, EditarClienteDTO dto){
+        Clientes clienteExistente = clientesRepository.findById(id).orElseThrow(()-> new RuntimeException("Cliente não existe"));
 
-        Clientes clienteExistente = clientesRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente não econtrado"));
-
-        if (clientesRepository.existsByEmail(clienteExistente.getEmail())) {
-            throw new RuntimeException("Um cliente com esse email ja existe");
+        if (dto.email() != null &&
+                clientesRepository.existsByEmailAndIdNot(dto.email(), id))
+        {
+            throw new RuntimeException("OUTRO CLIENTE JÁ TEM ESSE EMAIL CADASTRADO");
         }
 
-        if (clientesRepository.existsByCpf(clienteExistente.getCpf())) {
-            throw new RuntimeException("Um cliente com esse CPF ja existe");
+        if(dto.telefone() != null &&
+                clientesRepository.existsByTelefoneAndIdNot(dto.telefone(), id))
+        {
+            throw new RuntimeException("OUTRO CLIENTE JA USA ESSE TELEFONE ");
         }
 
-        if (clientesRepository.existsByTelefone(clienteExistente.getTelefone())) {
-            throw new RuntimeException("Um cliente ja tem esse numero cadastrado");
-        }
+        clienteExistente.setNome(dto.nome());
+        clienteExistente.setEmail(dto.email());
+        clienteExistente.setTelefone(dto.telefone());
 
+        return clientesRepository.save(clienteExistente);
 
-        clienteExistente.setNome(editarClienteDTO.nome());
-        clienteExistente.setEmail(editarClienteDTO.email());
-        clienteExistente.setTelefone(editarClienteDTO.telefone());
-        clienteExistente.setCpf(editarClienteDTO.cpf());
-
-        clientesRepository.save(clienteExistente);
-
-        return clienteExistente;
     }
 }

@@ -2,9 +2,11 @@ package com.sales.SistemaOS.model;
 
 public enum EnumStatus {
 
-    CONCUIDO,
+    ABERTA,
     EM_ANDAMENTO,
-    ABERTA
-
+    AGUARDANDO_PECAS,
+    CONCLUIDA,
+    CANCELADA,
+    AGUARDANDO_APROVACAO
 
 }

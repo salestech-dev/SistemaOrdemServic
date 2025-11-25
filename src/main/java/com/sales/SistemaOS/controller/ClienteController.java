@@ -9,9 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("clientes")
+@RequestMapping("/clientes")
 public class ClienteController {
 
     @Autowired
@@ -29,9 +30,17 @@ public class ClienteController {
         return  ResponseEntity.ok(lista);
     }
 
-    @PutMapping
-    public ResponseEntity<Clientes> atualizarCliente(@RequestBody EditarClienteDTO editarClienteDTO){
+    @PutMapping("/{id}")
+    public ResponseEntity<Clientes> atualizarCliente(@PathVariable("id") UUID id,
+                                                     @RequestBody EditarClienteDTO dto){
+            Clientes clientesAtualizado = clienteService.editarCliente(id,dto);
+            return ResponseEntity.ok(clientesAtualizado);
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Clientes>deletarCliente(@PathVariable("id") UUID id){
+        clienteService.deletarCliente(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
