@@ -36,7 +36,7 @@ public class ServicosController {
     }
 
     @DeleteMapping("/{id}")
-    public void deletarSevico(@PathVariable UUID id){
+    public void deletarServico(@PathVariable UUID id){
         servicoService.deletarServico(id);
     }
 
@@ -48,6 +48,11 @@ public class ServicosController {
     @GetMapping("/servicos/ativos")
     public List<Servicos> buscarPorAtivo(){
         return servicoService.buscarPorAtivoTrue();
+    }
+
+    @PutMapping("/{id}/inativar")
+    public Servicos inativarServico(@PathVariable("id") UUID id){
+        return servicoService.desativarServico(id);
     }
 
 }

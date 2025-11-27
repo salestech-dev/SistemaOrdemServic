@@ -88,5 +88,13 @@ public class ServicoService {
         return lista;
     }
 
+    public Servicos desativarServico(UUID id){
+    Servicos servicos = servicosRepository.findById(id)
+            .orElseThrow(()-> new RuntimeException("Esse servico não foi econtrado"));
+    //Seta servico como falso.
+     servicos.setAtivo(false);
+        return servicosRepository.save(servicos);
+    }
+
 
 }

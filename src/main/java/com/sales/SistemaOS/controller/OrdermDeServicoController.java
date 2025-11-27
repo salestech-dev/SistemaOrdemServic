@@ -21,25 +21,6 @@ public class OrdermDeServicoController {
 
 
 
-    @PostMapping
-    public OrdemDeServico criarOrdem(@RequestBody CriarOrdemDTO dto) {
-        return ordemDeServicosService.salvarNovaOrdem(
-                dto.getIdCliente(),
-                dto.getIdServico(),
-                dto.getObservacoes()
-        );
-    }
-
-    @GetMapping
-    public List<OrdemDeServico> listar(){
-         return ordemDeServicosService.listar();
-    }
-
-    @GetMapping("/{id}")
-    public OrdemDeServico buscarPorId(@PathVariable("id") UUID uuid){
-        return ordemDeServicosService.buscarPorId(uuid);
-    }
-
 
 
 
