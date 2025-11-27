@@ -50,4 +50,7 @@ public class OrdemDeServicosService {
         return novaOrdem;
     }
 
+    public long contarOS(){
+        return ordemRepository.count();
+    }
 }
