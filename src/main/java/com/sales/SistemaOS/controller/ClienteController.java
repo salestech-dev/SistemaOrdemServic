@@ -46,7 +46,12 @@ public class ClienteController {
     @GetMapping("/count")
     public long contarQuantidadeClientes(){
       return clienteService.contarClientes();
+    }
 
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Clientes>> buscarPorNome(@RequestParam String nome){
+       List<Clientes> lista = clienteService.buscarPorNome(nome);
+        return ResponseEntity.ok(lista);
     }
 
 }
