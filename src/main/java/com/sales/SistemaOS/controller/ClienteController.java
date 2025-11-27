@@ -3,12 +3,16 @@ package com.sales.SistemaOS.controller;
 import com.sales.SistemaOS.dto.EditarClienteDTO;
 import com.sales.SistemaOS.model.Clientes;
 import com.sales.SistemaOS.service.ClienteService;
+import com.sales.SistemaOS.service.OrdemDeServicosService;
+import com.sales.SistemaOS.service.ServicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -17,6 +21,10 @@ public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
+
+    @Autowired
+    private ServicoService servicoService;
+    private OrdemDeServicosService osService;
 
     @PostMapping
     public ResponseEntity<Clientes> salvarCliente(@RequestBody Clientes clientes){
@@ -52,6 +60,18 @@ public class ClienteController {
     public ResponseEntity<List<Clientes>> buscarPorNome(@RequestParam String nome){
        List<Clientes> lista = clienteService.buscarPorNome(nome);
         return ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("/estatisticas")
+    public Map<String, Object> getEstatisticas() {
+        Map<String, Object> stats = new HashMap<>();
+
+        stats.put("totalClientes", clienteService.contarClientes());
+        stats.put("totalServicos", servicoService.contarServicosAtivos());
+        stats.put("totalOrdensServico", osService.contarOS());
+        stats.put("sistemaAtivo", true);
+
+        return stats;
     }
 
 }
