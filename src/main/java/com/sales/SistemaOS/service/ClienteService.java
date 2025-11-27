@@ -76,4 +76,19 @@ public class ClienteService {
     public long contarClientes(){
         return clientesRepository.count();
     }
+
+    //Buscar Cliente pelo ID
+    public Clientes buscarPorId(UUID id){
+        Clientes clientes = clientesRepository.findById(id).orElseThrow(()-> new RuntimeException("Cliente não econtrado"));
+        return clientes;
+    }
+
+    public List<Clientes> buscarPorNome(String nome){
+       List<Clientes> lista = clientesRepository.findByNomeContainingIgnoreCase(nome);
+       if(lista.isEmpty()){
+           throw new RuntimeException("Nenhum cliente foi econtrado com esse nome");
+       }
+       return lista;
+    }
+
 }
