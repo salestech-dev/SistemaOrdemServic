@@ -1,14 +1,11 @@
 package com.sales.SistemaOS.service;
 
 import com.sales.SistemaOS.dto.EditarServicosDTO;
-import com.sales.SistemaOS.model.Clientes;
 import com.sales.SistemaOS.model.Servicos;
 import com.sales.SistemaOS.repository.ServicosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -94,6 +91,10 @@ public class ServicoService {
     //Seta servico como falso.
      servicos.setAtivo(false);
         return servicosRepository.save(servicos);
+    }
+
+    public List<Servicos> contarServicosAtivos(){
+        return servicosRepository.findByAtivoTrue();
     }
 
 
