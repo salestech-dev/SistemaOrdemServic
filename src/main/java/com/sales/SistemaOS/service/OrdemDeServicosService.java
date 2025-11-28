@@ -1,5 +1,6 @@
 package com.sales.SistemaOS.service;
 
+import com.sales.SistemaOS.dto.CriarOrdemDTO;
 import com.sales.SistemaOS.model.Clientes;
 import com.sales.SistemaOS.model.EnumStatus;
 import com.sales.SistemaOS.model.OrdemDeServico;
@@ -35,16 +36,19 @@ public class OrdemDeServicosService {
 
     }
 
-    public OrdemDeServico criarNovaOrdem(String observacoes, UUID idClientes, UUID idServicos){
-        Clientes cliente = buscarClientesPorId(idClientes);
-        Servicos servico = buscarServicosPorId(idServicos);
+    public OrdemDeServico criarNovaOrdem(CriarOrdemDTO dto){
+        Clientes cliente = buscarClientesPorId(dto.getClienteId());
+        Servicos servico = buscarServicosPorId(dto.getServicoId());
 
         OrdemDeServico novaOrdem = new OrdemDeServico();
         novaOrdem.setClientes(cliente);
         novaOrdem.setServicos(servico);
         novaOrdem.setStatus(EnumStatus.ABERTA);
-        novaOrdem.setObservacoes(observacoes);
+        novaOrdem.setObservacoes(dto.getObservacoes());
         novaOrdem.setDataAbertura(LocalDate.now());
+        novaOrdem.setDataPrevista(dto.getDataPrevista());
+        novaOrdem.setPrioridade(dto.getPrioridade());
+        novaOrdem.setValorTotal(dto.getValorTotal());
 
         ordemRepository.save(novaOrdem);
         return novaOrdem;

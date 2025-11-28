@@ -2,6 +2,7 @@ package com.sales.SistemaOS.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -30,7 +31,50 @@ public class OrdemDeServico {
     @JoinColumn(name = "servico_id", nullable = false)
     private Servicos servicos;
 
+    @Column
+    private LocalDate dataConclusao;            // Quando foi finalizada
+    @Column
+    private LocalDate dataPrevista;           // Prazo estimado
+    @Column
+    private EnumPrioridade prioridade;                // "ALTA", "MEDIA", "BAIXA"
+    @Column
+    private BigDecimal valorTotal;            // Valor do serviço
 
+    public LocalDate getDataConclusao() {
+        return dataConclusao;
+    }
+
+    public OrdemDeServico setDataConclusao(LocalDate dataConclusao) {
+        this.dataConclusao = dataConclusao;
+        return this;
+    }
+
+    public LocalDate getDataPrevista() {
+        return dataPrevista;
+    }
+
+    public OrdemDeServico setDataPrevista(LocalDate dataPrevista) {
+        this.dataPrevista = dataPrevista;
+        return this;
+    }
+
+    public EnumPrioridade getPrioridade() {
+        return prioridade;
+    }
+
+    public OrdemDeServico setPrioridade(EnumPrioridade prioridade) {
+        this.prioridade = prioridade;
+        return this;
+    }
+
+    public BigDecimal getValorTotal() {
+        return valorTotal;
+    }
+
+    public OrdemDeServico setValorTotal(BigDecimal valorTotal) {
+        this.valorTotal = valorTotal;
+        return this;
+    }
 
 
 
@@ -44,6 +88,10 @@ public class OrdemDeServico {
                 ", status=" + status +
                 ", clientes=" + clientes +
                 ", servicos=" + servicos +
+                ", dataConclusao=" + dataConclusao +
+                ", dataPrevista=" + dataPrevista +
+                ", prioridade=" + prioridade +
+                ", valorTotal=" + valorTotal +
                 '}';
     }
 
